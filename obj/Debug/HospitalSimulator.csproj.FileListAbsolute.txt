@@ -1,0 +1,8 @@
+C:\Users\aleja\Desktop\EjerciciosEsplai2023\ProyectosC#\HospitalSimulator\HospitalSimulator\bin\Debug\HospitalSimulator.exe.config
+C:\Users\aleja\Desktop\EjerciciosEsplai2023\ProyectosC#\HospitalSimulator\HospitalSimulator\bin\Debug\HospitalSimulator.exe
+C:\Users\aleja\Desktop\EjerciciosEsplai2023\ProyectosC#\HospitalSimulator\HospitalSimulator\bin\Debug\HospitalSimulator.pdb
+C:\Users\aleja\Desktop\EjerciciosEsplai2023\ProyectosC#\HospitalSimulator\HospitalSimulator\obj\Debug\HospitalSimulator.csproj.AssemblyReference.cache
+C:\Users\aleja\Desktop\EjerciciosEsplai2023\ProyectosC#\HospitalSimulator\HospitalSimulator\obj\Debug\HospitalSimulator.csproj.SuggestedBindingRedirects.cache
+C:\Users\aleja\Desktop\EjerciciosEsplai2023\ProyectosC#\HospitalSimulator\HospitalSimulator\obj\Debug\HospitalSimulator.csproj.CoreCompileInputs.cache
+C:\Users\aleja\Desktop\EjerciciosEsplai2023\ProyectosC#\HospitalSimulator\HospitalSimulator\obj\Debug\HospitalSimulator.exe
+C:\Users\aleja\Desktop\EjerciciosEsplai2023\ProyectosC#\HospitalSimulator\HospitalSimulator\obj\Debug\HospitalSimulator.pdb
