@@ -15,15 +15,15 @@ namespace HospitalSimulator
         public char Sexo { get; set; }
         public string DNI { get; set; }
 
-        public void MostrarValores(Persona obj)
+        public virtual void MostrarValores()
         {
-            Type tipo = obj.GetType();
+            Type tipo = this.GetType();
             PropertyInfo[] propiedades = tipo.GetProperties();
 
             foreach (PropertyInfo propiedad in propiedades)
             {
                 string nombre = propiedad.Name;
-                object valor = propiedad.GetValue(obj);
+                object valor = propiedad.GetValue(this);
 
                 Console.WriteLine($"{nombre}: {valor}");
             }

@@ -79,33 +79,23 @@ namespace HospitalSimulator
             {
                 AltaMedico(persona);
             }
-
             return persona;
         }
         public static Paciente AltaPaciente(Persona persona)
         {
             Paciente paciente = persona as Paciente;
-            int separador = 4;
-            for (int i = 0; i < separador; i++)
+
+            for (int i = 0; i < paciente.Enfermedades.Length; i++)
             {
-                //sumar 4 a separador y decir cual es mi especialistaaaaa
+                Console.WriteLine($"{i + 1}. {paciente.Enfermedades[i]}");
             }
-
-            Console.WriteLine("Cual es el motivo de su cita? (Escriba el número)");
-
-            /*//Escribir lista de enfermedades
-            for (int i = 0; i < enfermedades.Length; i++)
-            {
-                Console.WriteLine($"{i + 1}. {enfermedades[i]}[{i + 1}]");
-            }
-
             int seleccion = -1;
-            while (seleccion < 1 || seleccion > enfermedades.Length)
+            while (seleccion < 1 || seleccion > paciente.Enfermedades.Length)
             {
                 Console.Write("Seleccione una opción: ");
                 if (int.TryParse(Console.ReadLine(), out seleccion))
                 {
-                    if (seleccion < 1 || seleccion > enfermedades.Length)
+                    if (seleccion < 1 || seleccion > paciente.Enfermedades.Length)
                     {
                         Console.WriteLine("Opción inválida. Inténtelo nuevamente.");
                     }
@@ -115,36 +105,32 @@ namespace HospitalSimulator
                     Console.WriteLine("Opción inválida. Inténtelo nuevamente.");
                 }
             }
-            paciente.Enfermedad = enfermedades[seleccion - 1];
-            if(listaMedicos.Count > 0)
-            {
-                foreach (Medico medico in listaMedicos)
-                {
 
-                    //switch case de especialidades, según mi enfermedad,  se me asignara a la lista de pacientes del Medico correspondiente, lista llamada "ListaPacientes"
-                }
-            }*/
+            paciente.Enfermedad = paciente.Enfermedades[seleccion - 1];
+
+            Console.Clear();
+            paciente.MostrarValores();
             return paciente;
         }
         public static Medico AltaMedico(Persona persona)
         {
             Medico medico = persona as Medico;
 
-            Console.WriteLine("Cual es su especialidad? (Escriba el número)");
+            Console.WriteLine("Cual es su especialidad? (Introduzca el número correspondiente a su especialidad)");
 
-            //Escribir lista de especialidades
             for (int i = 0; i < medico.Especialidades.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {medico.Especialidades[i].Nombre}[{i + 1}]");
+                Console.WriteLine($"{i + 1}. {medico.Especialidades[i].Nombre}");
             }
 
+            // Pedir al usuario que elija una especialidad
             int seleccion = -1;
-            /*while (seleccion < 1 || seleccion > especialidades.Length)
+            while (seleccion < 1 || seleccion > medico.Especialidades.Count)
             {
                 Console.Write("Seleccione una opción: ");
                 if (int.TryParse(Console.ReadLine(), out seleccion))
                 {
-                    if (seleccion < 1 || seleccion > especialidades.Length)
+                    if (seleccion < 1 || seleccion > medico.Especialidades.Count)
                     {
                         Console.WriteLine("Opción inválida. Inténtelo nuevamente.");
                     }
@@ -154,8 +140,13 @@ namespace HospitalSimulator
                     Console.WriteLine("Opción inválida. Inténtelo nuevamente.");
                 }
             }
-            medico.Especialidad = especialidades[seleccion - 1];*/
+            // Obtener la especialidad seleccionada por el usuario y eliminar demas especialdiades
+            medico.Especialidad = medico.Especialidades[seleccion - 1].Nombre;
+            medico.Especialidades.Clear();
+
             medico.NumeroColegiado = new Random().Next(1000, 9999).ToString();
+
+            medico.MostrarValores();
             return medico;
         }
         public static Persona RellenarDatosComunes(Persona persona)
@@ -200,12 +191,15 @@ namespace HospitalSimulator
                 try
                 {
                     persona.Edad = Int32.Parse(Console.ReadLine());
+                    if(persona.Edad > 120 || persona.Edad < 3) throw new Exception("Introduzca otra edad.");
+                    if(persona is Medico && persona.Edad < 22) throw FormatError("Usted es demasiado joven...(Introduzca una edad valida)");
                     edadValida = true;
                 }
                 catch (FormatException)
                 {
                     FormatError("La edad debe ser un número entero. Inténtelo nuevamente.");
                 }
+                catch (Exception){ }
             } while (!edadValida);
 
             do
@@ -240,23 +234,25 @@ namespace HospitalSimulator
             do
             {
                 Console.WriteLine("Introduzca su Sexo: (M / F)");
-                try
+                ConsoleKeyInfo key = Console.ReadKey();
+                Console.WriteLine();
+
+                if (key.KeyChar == 'M' || key.KeyChar == 'm')
                 {
-                    persona.Sexo = Char.Parse(Console.ReadLine().ToUpper());
-                    if (persona.Sexo == 'M' || persona.Sexo == 'F')
-                    {
-                        sexoValido = true;
-                    }
-                    else
-                    {
-                        throw new FormatException();
-                    }
+                    persona.Sexo = 'M';
+                    sexoValido = true;
                 }
-                catch (FormatException)
+                else if (key.KeyChar == 'F' || key.KeyChar == 'f')
                 {
-                    FormatError("Sexo no definido.Inténtelo nuevamente.");
+                    persona.Sexo = 'F';
+                    sexoValido = true;
+                }
+                else
+                {
+                    Console.WriteLine("Sexo no definido. Inténtelo nuevamente.");
                 }
             } while (!sexoValido);
+
             return persona;
         }
         public static Persona RellenarDatos(Persona persona)
@@ -264,11 +260,13 @@ namespace HospitalSimulator
             return persona;
         }
    
-        public static void FormatError(string error)
+        public static Exception FormatError(string error)
         {
+            Exception exception = new Exception(error);
             Console.Clear();
             WriteHeader();
             Console.WriteLine($"Error: {error}");
+            return exception;
         }
     }
 }

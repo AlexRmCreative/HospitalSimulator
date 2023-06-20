@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace HospitalSimulator
     {
         public string NumeroColegiado { get; set; }
         public List<Especialidad> Especialidades { get; set; }
+        public string Especialidad { get; set; }
         public List<Paciente> ListaPacientes { get; set; }
 
         public Medico()
@@ -80,6 +82,23 @@ namespace HospitalSimulator
                 }
             };
         }
+        public override void MostrarValores()
+        {
+            Type tipo = this.GetType();
+            PropertyInfo[] propiedades = tipo.GetProperties();
+
+            foreach (PropertyInfo propiedad in propiedades)
+            {
+                if (propiedad.Name != "Especialidades")  // Excluir la propiedad "Especialidades"
+                {
+                    string nombre = propiedad.Name;
+                    object valor = propiedad.GetValue(this);
+
+                    Console.WriteLine($"{nombre}: {valor}");
+                }
+            }
+        }
+
     }
 
     internal class Especialidad
