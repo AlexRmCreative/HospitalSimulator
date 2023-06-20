@@ -9,7 +9,8 @@ namespace HospitalSimulator
     internal class Paciente : Persona
     {
         public int NumeroOrden { get; set; }
-        public string Enfermedades { get; set; }
+        public string Enfermedad { get; set; }
+        public Medico Medicp{ get; set; }
 
         public override string ToString()
         {
